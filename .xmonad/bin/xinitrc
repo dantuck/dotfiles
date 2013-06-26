@@ -5,29 +5,30 @@
 
 
 # Configure PATH so that we can access our scripts below
-PATH=$PATH:~/.cabal/bin:~/.xmonad/bin:/opt/lampp/bin
+PATH=$PATH:~/.cabal/bin:~/.xmonad/bin:/opt/lampp/bin:~/bin
 
 # Configure X
-#xsetroot -cursor_name left_ptr &
-#xrdb -merge ~/.Xdefaults &
-#xscreensaver -no-splash &
+xsetroot -cursor_name left_ptr &
+xrdb -merge ~/.Xdefaults &
+xscreensaver -no-splash &
 
 # Start the system tray
 #tray &
 
 # Start two terminals
-#urxvt &
-#urxvt &
+urxvt &
+urxvt &
 
 # Start a browser
 #chromium &
+firefox &
 
 # Start xchat (IRC client)
 #pidgin &
 #xchat &
 
 
-#pulseaudio --start &
+pulseaudio --start &
 
-#exec xmonad
-exec gnome-session
+exec xmonad
+#exec gnome-session
