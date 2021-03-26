@@ -1,0 +1,8 @@
+# open ~/.zshrc in using the default editor specified in $EDITOR
+alias ec="$EDITOR $HOME/.zshrc"
+
+# source ~/.zshrc
+alias sc="source $HOME/.zshrc"
+
+alias md='mkdir -p'
+alias rd='rmdir'
