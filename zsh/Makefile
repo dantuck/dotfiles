@@ -5,7 +5,7 @@ install: .ensure.xdg
 	mkdir -p $(XDG_CACHE_HOME)/zsh
 	mkdir -p $(XDG_CONFIG_HOME)/zsh
 	mkdir -p $(XDG_DATA_HOME)/zsh
-	# ln -sf $(CURDIR)/zshenv $(HOME)/.zshenv
+	ln -sf $(CURDIR)/zshenv $(HOME)/.zshenv
 
 clean: .remove.xdg.module.zsh
 	# rm -rf $(HOME)/.zshenv
