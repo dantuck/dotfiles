@@ -1,1 +1,6 @@
+git/config.local
 zsh/local.zsh
+
+Brewfile.lock.json
+zsh/.zcompdump
+zsh/.zsh_history

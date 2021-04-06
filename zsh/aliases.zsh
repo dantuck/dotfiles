@@ -1,3 +1,5 @@
+alias reload!='exec "$SHELL" -l'
+
 # open ~/.zshrc in using the default editor specified in $EDITOR
 alias ec="$EDITOR $DOTFILES/.zshrc"
 

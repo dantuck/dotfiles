@@ -1,3 +1,12 @@
+export XDG_CONFIG_HOME=$HOME/.config
+export XDG_CACHE_HOME=$HOME/.cache
+export XDG_DATA_HOME=$HOME/.local/share
+export XDG_RUNTIME_DIR=$HOME/tmp/runtime
+
+export EDITOR=vim
+
+export BREWPATH=/usr/local/Cellar
+
 # Path to your oh-my-zsh installation.
 export ZSH=$XDG_CONFIG_HOME/oh-my-zsh/
 export ZSH_CUSTOM=$ZSH/custom/
@@ -69,4 +78,4 @@ export ZSH_THEME="robbyrussell"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-source $ZSH/oh-my-zsh.sh
+# source $ZSH/oh-my-zsh.sh

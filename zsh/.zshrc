@@ -17,6 +17,20 @@ for file in ${config_files:#*/env.zsh}; do
   source "$file"
 done
 
+################################################################################
+# Initialize the autocompletion framework.
+autoload -Uz compinit
+if [[ -n ${XDG_CACHE_HOME}/zsh/zcompdump(#qN.mh+24) ]]; then
+  compinit -i -d $XDG_CACHE_HOME/zsh/zcompdump;
+else
+  compinit -C $XDG_CACHE_HOME/zsh/zcompdump;
+fi;
+
+################################################################################
+# Load Antibody Plugins
+source $XDG_DATA_HOME/zsh/plugins
+source $XDG_CONFIG_HOME/oh-my-zsh/oh-my-zsh.sh
+
 unset config_files 
 
 export NVM_DIR="$HOME/.nvm"
