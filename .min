@@ -1,9 +1,0 @@
-local DOTFILES=$HOME/.dotfiles
-local ZSH_CONF=$DOTFILES/.zsh
-
-source $ZSH_CONF/alias/util
-source $ZSH_CONF/alias/git
-source $ZSH_CONF/alias/docker
-source $ZSH_CONF/alias/nav
-
-export EDITOR=vim
