@@ -1,4 +1,4 @@
-MODULES = git zsh
+MODULES = git zsh docker
 
 CLEAN := $(addsuffix .clean,$(MODULES))
 

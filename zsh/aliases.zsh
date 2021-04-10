@@ -1,10 +1,13 @@
 alias reload!='exec "$SHELL" -l'
 
-# open ~/.zshrc in using the default editor specified in $EDITOR
-alias ec="$EDITOR $DOTFILES/.zshrc"
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
 
-# source ~/.zshrc
-alias sc="source $HOME/.zshrc"
+alias c='clear'
+
+# open .zshrc in using the default editor specified in $EDITOR
+alias ec="$EDITOR $DOTFILES/zsh/.zshrc"
 
 alias md='mkdir -p'
 alias rd='rmdir'

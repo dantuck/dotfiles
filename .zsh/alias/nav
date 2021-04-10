@@ -1,3 +1,0 @@
-if [[ -r $NAV_ALIAS ]]; then
-  source $NAV_ALIAS
-fi
