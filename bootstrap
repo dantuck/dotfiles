@@ -1,8 +1,5 @@
 #! /usr/bin/env bash
 
-echo "This file should be sourced..."
-echo ''
-
 export XDG_CONFIG_HOME=${HOME}/.config
 export XDG_CACHE_HOME=${HOME}/.cache
 export XDG_DATA_HOME=${HOME}/.local/share
