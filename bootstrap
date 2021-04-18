@@ -1,4 +1,4 @@
-#! /usr/bin/env bash
+#!/usr/bin/env bash
 
 export XDG_CONFIG_HOME=${HOME}/.config
 export XDG_CACHE_HOME=${HOME}/.cache
@@ -14,8 +14,19 @@ echo ''
 echo "Setting up Homebrew..."
 echo ''
 
+UNAME=`uname`
 if test ! "$(command -v brew)"; then
-  ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" | while read -r line; do echo "$line"; done
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  
+  if [ "$UNAME" = "Linux" ]; then
+    echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ${XDG_CONFIG_HOME}/zsh/local.zsh
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
+    sudo apt-get install build-essential
+    brew install gcc
+  else # if [ "$UNAME" == "Darwin" ]; then
+
+  fi
 else
   while read -r brw; do
     echo "${brw}"
@@ -25,5 +36,8 @@ fi
 
 brew bundle
 make all
-sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+if [ ! -d "${HOME}/.oh-my-zsh" ]; then
+  sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+fi
+
 source $XDG_CONFIG_HOME/zsh/.zshrc

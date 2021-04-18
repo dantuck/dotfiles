@@ -1,4 +1,5 @@
 tap 'getantibody/tap'
+tap 'xwmx/taps'
 
 cask 'discord'
 
@@ -8,4 +9,6 @@ brew 'git'
 brew 'zsh'
 brew 'node'
 
-brew 'magic-wormhole'
+# brew 'magic-wormhole'
+
+brew 'nb'
