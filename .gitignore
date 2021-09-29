@@ -1,6 +1,7 @@
 git/config.local
 zsh/local.zsh
 
-Brewfile.lock.json
+darwin.brewfile.lock.json
 zsh/.zcompdump
 zsh/.zsh_history
+linux.brewfile.lock.json
