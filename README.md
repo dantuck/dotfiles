@@ -26,5 +26,5 @@ cd ~/.dotfiles && . ./bootstrap
 
 Influneced by and examples taken from:
 
-[mnarrell](https://github.com/mnarrell/dotfiles)
-[kwtucker][https://github.com/kwtucker/dotfiles]
+- [mnarrell](https://github.com/mnarrell/dotfiles)
+- [kwtucker](https://github.com/kwtucker/dotfiles)
