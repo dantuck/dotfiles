@@ -41,7 +41,8 @@ set -e
 custom_zsh=${ZSH:+yes}
 
 # Default settings
-ZSH=${ZSH:-~/.dots}
+DOTS=${DOTS:-~/.dots}
+ZSH=${ZSH:-${DOTS}/zsh}
 REPO=${REPO:-dantuck/dotfiles}
 REMOTE=${REMOTE:-https://gitlab.com/${REPO}.git}
 BRANCH=${BRANCH:-main}
@@ -182,6 +183,13 @@ setup_color() {
   fi
 }
 
+setup_xdg() {
+  export XDG_CONFIG_HOME=${HOME}/.config
+  export XDG_CACHE_HOME=${HOME}/.cache
+  export XDG_DATA_HOME=${HOME}/.local/share
+  export XDG_RUNTIME_DIR=${HOME}/tmp/xdg_runtime
+}
+
 setup_dots() {
   # Prevent the cloned repository from having insecure permissions. Failing to do
   # so causes compinit() calls to fail with "command not found: compdef" errors
@@ -192,28 +200,32 @@ setup_dots() {
 
   echo "${BLUE}Cloning dantuck dots...${RESET}"
 
-  command_exists git || {
-    fmt_error "git is not installed"
-    exit 1
-  }
+  # command_exists git || {
+  #   fmt_error "git is not installed"
+  #   exit 1
+  # }
 
-  ostype=$(uname)
-  if [ -z "${ostype%CYGWIN*}" ] && git --version | grep -q msysgit; then
-    fmt_error "Windows/MSYS Git is not supported on Cygwin"
-    fmt_error "Make sure the Cygwin git package is installed and is first on the \$PATH"
-    exit 1
-  fi
+  # ostype=$(uname)
+  # if [ -z "${ostype%CYGWIN*}" ] && git --version | grep -q msysgit; then
+  #   fmt_error "Windows/MSYS Git is not supported on Cygwin"
+  #   fmt_error "Make sure the Cygwin git package is installed and is first on the \$PATH"
+  #   exit 1
+  # fi
 
-  git clone -c core.eol=lf -c core.autocrlf=false \
-    -c fsck.zeroPaddedFilemode=ignore \
-    -c fetch.fsck.zeroPaddedFilemode=ignore \
-    -c receive.fsck.zeroPaddedFilemode=ignore \
-    -c oh-my-zsh.remote=origin \
-    -c oh-my-zsh.branch="$BRANCH" \
-    --depth=1 --branch "$BRANCH" "$REMOTE" "$ZSH" || {
-    fmt_error "git clone of dantuck dots repo failed"
-    exit 1
-  }
+  # git clone -c core.eol=lf -c core.autocrlf=false \
+  #   -c fsck.zeroPaddedFilemode=ignore \
+  #   -c fetch.fsck.zeroPaddedFilemode=ignore \
+  #   -c receive.fsck.zeroPaddedFilemode=ignore \
+  #   -c dots.remote=origin \
+  #   -c dots.branch="$BRANCH" \
+  #   --depth=1 --branch "$BRANCH" "$REMOTE" "$DOTS" || {
+  #   fmt_error "git clone of dantuck dots repo failed"
+  #   exit 1
+  # }
+
+  cd ${DOTS}
+
+  make all
 
   echo
 }
@@ -252,8 +264,8 @@ setup_zshrc() {
 
   sed "/^export ZSH=/ c\\
 export ZSH=\"$ZSH\"
-" "$ZSH/templates/zshrc.zsh-template" > ~/.zshrc-omztemp
-  mv -f ~/.zshrc-omztemp ~/.zshrc
+" "$ZSH/zshrc.template-zsh" > $ZSH/.zshrc
+  ln -sf $ZSH/.zshrc ~/.zshrc
 
   echo
 }
@@ -339,21 +351,12 @@ EOF
 
 # shellcheck disable=SC2183  # printf string has more %s than arguments ($RAINBOW expands to multiple arguments)
 print_success() {
-  printf '%s         %s__      %s           %s        %s       %s     %s__   %s\n'      $RAINBOW $RESET
-  printf '%s  ____  %s/ /_    %s ____ ___  %s__  __  %s ____  %s_____%s/ /_  %s\n'      $RAINBOW $RESET
-  printf '%s / __ \\%s/ __ \\  %s / __ `__ \\%s/ / / / %s /_  / %s/ ___/%s __ \\ %s\n'  $RAINBOW $RESET
-  printf '%s/ /_/ /%s / / / %s / / / / / /%s /_/ / %s   / /_%s(__  )%s / / / %s\n'      $RAINBOW $RESET
-  printf '%s\\____/%s_/ /_/ %s /_/ /_/ /_/%s\\__, / %s   /___/%s____/%s_/ /_/  %s\n'    $RAINBOW $RESET
-  printf '%s    %s        %s           %s /____/ %s       %s     %s          %s....is now installed!%s\n' $RAINBOW $GREEN $RESET
   printf '\n'
   printf '\n'
-  printf "%s %s %s\n" "Before you scream ${BOLD}${YELLOW}Oh My Zsh!${RESET} look over the" \
+  printf "%s %s %s\n" "Look over the" \
     "$(fmt_code "$(fmt_link ".zshrc" "file://$HOME/.zshrc" --text)")" \
     "file to select plugins, themes, and options."
   printf '\n'
-  printf '%s\n' "• Follow us on Twitter: $(fmt_link @ohmyzsh https://twitter.com/ohmyzsh)"
-  printf '%s\n' "• Join our Discord community: $(fmt_link "Discord server" https://discord.gg/ohmyzsh)"
-  printf '%s\n' "• Get stickers, t-shirts, coffee mugs and more: $(fmt_link "Planet Argon Shop" https://shop.planetargon.com/collections/oh-my-zsh)"
   printf '%s\n' $RESET
 }
 
@@ -382,7 +385,7 @@ main() {
   fi
 
   if [ -d "$ZSH" ]; then
-    echo "${YELLOW}The \$ZSH folder already exists ($ZSH).${RESET}"
+    echo "${YELLOW}The \$ZSH folder already exists ($DOTS).${RESET}"
     if [ "$custom_zsh" = yes ]; then
       cat <<EOF
 
@@ -394,13 +397,13 @@ exported. You have 3 options:
 2. Install Dots to a directory that doesn't exist yet:
    $(fmt_code "ZSH=path/to/new/dots/folder sh install.sh")
 3. (Caution) If the folder doesn't contain important information,
-   you can just remove it with $(fmt_code "rm -r $ZSH")
+   you can just remove it with $(fmt_code "rm -r $DOTS")
 
 EOF
     else
       echo "You'll need to remove it if you want to reinstall."
     fi
-    exit 1
+    # exit 1
   fi
 
   setup_dots
