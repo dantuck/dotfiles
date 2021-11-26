@@ -2,6 +2,11 @@
 
 export DOTFILES="$HOME/.dots"
 
+# Check for updates on initial load...
+if [ "$DISABLE_AUTO_UPDATE" != "true" ]; then
+  source $DOTFILES/utils/check_for_upgrade.sh
+fi
+
 typeset -U config_files
 config_files=($XDG_CONFIG_HOME/*/*.zsh)
 
