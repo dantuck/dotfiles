@@ -2,6 +2,7 @@ git/config.local
 zsh/local.zsh
 
 darwin.brewfile.lock.json
+zsh/.zshrc
 zsh/.zcompdump
 zsh/.zsh_history
 linux.brewfile.lock.json
