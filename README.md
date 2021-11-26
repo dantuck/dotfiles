@@ -1,7 +1,7 @@
 ## Getting started
 
-```
-git clone git@gitlab.com:dantuck/dotfiles.git ~/.dotfiles
+```bash
+sh -c "$(curl -fsSL https://gitlab.com/dantuck/dotfiles/-/raw/main/utils/install.sh)"
 ```
 
 
