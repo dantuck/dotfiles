@@ -62,7 +62,7 @@ local ret=0
 # Update Dots
 printf "${BLUE}%s${RESET}\n" "Updating dots"
 last_commit=$(git rev-parse HEAD)
-if git pull --rebase --stat origin master; then
+if git pull --rebase --stat origin main; then
   # Check if it was really updated or not
   if [[ "$(git rev-parse HEAD)" = "$last_commit" ]]; then
     message="Dots is already at the latest version."
@@ -74,7 +74,7 @@ if git pull --rebase --stat origin master; then
 
     # Display changelog with less if available, otherwise just print it to the terminal
     if [[ "$1" = --interactive ]]; then
-      "$ZSH/utils/changelog.sh" HEAD "$last_commit"
+      "$DOTFILES/utils/changelog.sh" HEAD "$last_commit"
     fi
   fi
 

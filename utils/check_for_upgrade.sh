@@ -13,7 +13,6 @@ if [[ "$DISABLE_AUTO_UPDATE" = true ]] \
   return
 fi
 
-
 function current_epoch() {
   zmodload zsh/datetime
   echo $(( EPOCHSECONDS / 60 / 60 / 24 ))
@@ -24,7 +23,7 @@ function update_last_updated_file() {
 }
 
 function update_dots() {
-  if ZSH="$ZSH" zsh -f "$ZSH/utils/upgrade.sh" --interactive; then
+  if DOTFILES="$DOTFILES" zsh -f "$DOTFILES/utils/upgrade.sh" --interactive; then
     update_last_updated_file
   fi
 }
