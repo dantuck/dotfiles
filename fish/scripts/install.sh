@@ -208,16 +208,16 @@ setup_dots() {
     exit 1
   fi
 
-  # git clone -c core.eol=lf -c core.autocrlf=false \
-  #   -c fsck.zeroPaddedFilemode=ignore \
-  #   -c fetch.fsck.zeroPaddedFilemode=ignore \
-  #   -c receive.fsck.zeroPaddedFilemode=ignore \
-  #   -c dots.remote=origin \
-  #   -c dots.branch="$BRANCH" \
-  #   --depth=1 --branch "$BRANCH" "$REMOTE" "$DOTS" || {
-  #   fmt_error "git clone of dantuck dots repo failed"
-  #   exit 1
-  # }
+  git clone -c core.eol=lf -c core.autocrlf=false \
+    -c fsck.zeroPaddedFilemode=ignore \
+    -c fetch.fsck.zeroPaddedFilemode=ignore \
+    -c receive.fsck.zeroPaddedFilemode=ignore \
+    -c dots.remote=origin \
+    -c dots.branch="$BRANCH" \
+    --depth=1 --branch "$BRANCH" "$REMOTE" "$DOTS" || {
+    fmt_error "git clone of dantuck dots repo failed"
+    exit 1
+  }
 
   cd ${DOTS}
 
