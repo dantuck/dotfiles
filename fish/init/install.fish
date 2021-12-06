@@ -23,6 +23,6 @@ for f in ~/.extra/functions
 	set -Up fish_function_path $f
 end
 
-if test -f ~/.extra/abbr.fish
-	ln -sf $f ~/.config/fish/conf.d/(basename $f)
-end
+abbr -a c 'clear'
+abbr -a mb 'mkdir -p'
+abbr -a rd 'rmdir'
