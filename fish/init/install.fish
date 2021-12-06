@@ -19,6 +19,6 @@ if test -f ~/.localrc.fish
 	ln -sf ~/.localrc.fish ~/.config/fish/conf.d/localrc.fish
 end
 
-if f in ~/.extra/*/functions
+if f in ~/.extra/functions
 	set -Up fish_function_path $f
 end
