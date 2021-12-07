@@ -1,9 +1,50 @@
-## Getting started
+## Setup
+
+## Fish
+
+### Getting started
+
+```fish
+curl -fsSL https://gitlab.com/dantuck/dotfiles/-/raw/fish/fish/scripts/install.sh | sh
+```
+
+```bash
+sh -c "$(curl -fsSL https://gitlab.com/dantuck/dotfiles/-/raw/fish/fish/scripts/install.sh)"
+```
+
+### Install fish
+
+Official [website](https://fishshell.com) or check out some snippets below.
+
+<details>
+<summary>macOS with homebrew</summary>
+
+```bash
+brew update && brew install fish
+```
+
+</details>
+
+<details>
+<summary>Ubuntu: fish shell - 3.x release series </summary>
+
+```bash
+sudo apt-add-repository ppa:fish-shell/release-3
+sudo apt-get update
+sudo apt-get install fish
+
+chsh -s /usr/bin/fish
+```
+
+</details>
+
+## ZSH
+
+### Getting started
 
 ```bash
 sh -c "$(curl -fsSL https://gitlab.com/dantuck/dotfiles/-/raw/main/utils/install.sh)"
 ```
-
 
 ### Setup dotfile components
 
@@ -24,7 +65,7 @@ cd ~/.dotfiles && . ./bootstrap
 
 ## Credits
 
-Influneced by and examples taken from:
+Influenced by and examples taken from:
 
 - [mnarrell](https://github.com/mnarrell/dotfiles)
 - [kwtucker](https://github.com/kwtucker/dotfiles)
