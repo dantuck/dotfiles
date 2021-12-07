@@ -1,5 +1,17 @@
 ## Setup
 
+## Fish
+
+### Getting started
+
+```fish
+curl -fsSL https://gitlab.com/dantuck/dotfiles/-/raw/fish/fish/scripts/install.sh | sh
+```
+
+```bash
+sh -c "$(curl -fsSL https://gitlab.com/dantuck/dotfiles/-/raw/fish/fish/scripts/install.sh)"
+```
+
 ### Install fish
 
 Official [website](https://fishshell.com) or check out some snippets below.
@@ -26,15 +38,13 @@ chsh -s /usr/bin/fish
 
 </details>
 
+## ZSH
 
-## Getting started
+### Getting started
 
 ```bash
 sh -c "$(curl -fsSL https://gitlab.com/dantuck/dotfiles/-/raw/main/utils/install.sh)"
-
-curl -fsSL https://gitlab.com/dantuck/dotfiles/-/raw/fish/fish/scripts/install.sh | sh
 ```
-
 
 ### Setup dotfile components
 
@@ -55,7 +65,7 @@ cd ~/.dotfiles && . ./bootstrap
 
 ## Credits
 
-Influneced by and examples taken from:
+Influenced by and examples taken from:
 
 - [mnarrell](https://github.com/mnarrell/dotfiles)
 - [kwtucker](https://github.com/kwtucker/dotfiles)
