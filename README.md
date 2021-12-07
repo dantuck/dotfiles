@@ -5,8 +5,10 @@
 ### Getting started
 
 ```fish
-curl -fsSL https://gitlab.com/dantuck/dotfiles/-/raw/main/fish/scripts/install.fish | sh
+curl -fsSL https://gitlab.com/dantuck/dotfiles/-/raw/main/fish/scripts/install.sh | sh
 ```
+
+or
 
 ```bash
 sh -c "$(curl -fsSL https://gitlab.com/dantuck/dotfiles/-/raw/main/fish/scripts/install.sh)"
