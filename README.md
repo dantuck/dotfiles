@@ -5,11 +5,11 @@
 ### Getting started
 
 ```fish
-curl -fsSL https://gitlab.com/dantuck/dotfiles/-/raw/fish/fish/scripts/install.sh | sh
+curl -fsSL https://gitlab.com/dantuck/dotfiles/-/raw/main/fish/scripts/install.fish | sh
 ```
 
 ```bash
-sh -c "$(curl -fsSL https://gitlab.com/dantuck/dotfiles/-/raw/fish/fish/scripts/install.sh)"
+sh -c "$(curl -fsSL https://gitlab.com/dantuck/dotfiles/-/raw/main/fish/scripts/install.sh)"
 ```
 
 ### Install fish

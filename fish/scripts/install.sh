@@ -42,7 +42,7 @@ DOTS=${DOTS:-~/.dots}
 FISH=${ZSH:-${DOTS}/fish}
 REPO=${REPO:-dantuck/dotfiles}
 REMOTE=${REMOTE:-https://gitlab.com/${REPO}.git}
-BRANCH=${BRANCH:-fish}
+BRANCH=${BRANCH:-main}
 
 # Other options
 CHSH=${CHSH:-yes}
