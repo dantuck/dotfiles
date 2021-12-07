@@ -1,4 +1,4 @@
 function dot
-    cd $DOTFILES
+    pushd $DOTFILES
     git pull
 end
