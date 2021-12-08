@@ -71,3 +71,4 @@ Influenced by and examples taken from:
 
 - [mnarrell](https://github.com/mnarrell/dotfiles)
 - [kwtucker](https://github.com/kwtucker/dotfiles)
+- [caarlos0](https://github.com/caarlos0/dotfiles.fish) [LICENSE](license/LICENSE-CARLOSBECKER.md)
