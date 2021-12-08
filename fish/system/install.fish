@@ -7,11 +7,12 @@ set -Ux DOTFILES ~/.dots
 
 set -Ua fish_user_paths $DOTFILES/bin $HOME/.bin
 
-for f in $DOTFILES/*/functions
+for f in $DOTFILES/fish/*/functions
+	echo $f
 	set -Up fish_function_path $f
 end
 
-for f in $DOTFILES/*/conf.d/*.fish
+for f in $DOTFILES/fish/*/conf.d/*.fish
 	ln -sf $f ~/.config/fish/conf.d/(basename $f)
 end
 
