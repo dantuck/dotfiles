@@ -5,7 +5,7 @@ set -Ux WEDITOR code
 
 set -Ux DOTFILES ~/.dots
 
-set -Ua fish_user_paths $DOTFILES/bin $HOME/.bin
+set -Ua fish_user_paths $DOTFILES/fish/bin $HOME/.bin
 
 for f in $DOTFILES/fish/*/functions
 	echo $f
