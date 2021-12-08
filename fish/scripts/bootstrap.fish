@@ -131,13 +131,6 @@ for installer in $DOTFILES_ROOT/**/install.fish
 		or abort $installer
 end
 
-if ! grep (command -v fish) /etc/shells
-	command -v fish | sudo tee -a /etc/shells
-		and success 'added fish to /etc/shells'
-		or abort 'setup /etc/shells'
-	echo
-end
-
 test (which fish) = $SHELL
 	and success 'dotfiles installed/updated!'
 	and exit 0
