@@ -1,6 +1,6 @@
 #!/usr/bin/env fish
 #
-# bootstrap installs things.
+# bootstrap
 
 set DOTFILES_ROOT (pwd -P)
 
@@ -23,7 +23,7 @@ end
 
 function on_exit -p %self
 	if not contains $argv[3] 0
-		echo [(set_color --bold red) FAIL (set_color normal)] "Couldn't setup dotfiles, please open an issue at https://github.com/caarlos0/dotfiles"
+		echo [(set_color --bold red) FAIL (set_color normal)] "Couldn't setup dots, please open an issue at https://gitlab.com/dantuck/dotfiles"
 	end
 end
 
@@ -31,9 +31,9 @@ function setup_gitconfig
 	set managed (git config --global --get dotfiles.managed)
 	# if there is no user.email, we'll assume it's a new machine/setup and ask it
 	if test -z (git config --global --get user.email)
-		user 'What is your github author name?'
+		user 'What is your git author name?'
 		read user_name
-		user 'What is your github author email?'
+		user 'What is your git author email?'
 		read user_email
 
 		test -n $user_name
