@@ -1,5 +1,3 @@
-## Setup
-
 ## Fish
 
 ### Getting started
@@ -40,7 +38,7 @@ chsh -s /usr/bin/fish
 
 </details>
 
-## ZSH
+## ZSH (no longer maintained)
 
 ### Getting started
 
