@@ -1,11 +1,7 @@
 #!/bin/sh
 #
 # This script should be run via curl:
-#   sh -c "$(curl -fsSL https://gitlab.com/dantuck/dotfiles/-/raw/fish/utils/install.sh)"
-# or via wget:
-#   sh -c "$(wget -qO- https://gitlab.com/dantuck/dotfiles/-/raw/fish/utils/install.sh)"
-# or via fetch:
-#   sh -c "$(fetch -o - https://gitlab.com/dantuck/dotfiles/-/raw/fish/utils/install.sh)"
+#   curl -fsSL https://gitlab.com/dantuck/dotfiles/-/raw/main/fish/scripts/install.sh | sh"
 #
 # As an alternative, you can first download the install script and run it afterwards:
 #   wget https://gitlab.com/dantuck/dotfiles/-/raw/fish/utils/install.sh
@@ -13,27 +9,13 @@
 #
 # You can tweak the install behavior by setting variables when running the script. For
 # example, to change the path to the Oh My Zsh repository:
-#   ZSH=~/.zsh sh install.sh
+#   DOTS=~/.dotfiles sh install.sh
 #
 # Respects the following environment variables:
-#   ZSH     - path to the Oh My Zsh repository folder (default: $HOME/.oh-my-zsh)
-#   REPO    - name of the GitHub repo to install from (default: ohmyzsh/ohmyzsh)
-#   REMOTE  - full remote URL of the git repo to install (default: GitHub via HTTPS)
+#   DOTS     - path to the Oh My Zsh repository folder (default: $HOME/.dots)
+#   REPO    - name of the Gitlab repo to install from (default: dantuck/dotfiles)
+#   REMOTE  - full remote URL of the git repo to install (default: Gitlab via HTTPS)
 #   BRANCH  - branch to check out immediately after install (default: main)
-#
-# Other options:
-#   CHSH       - 'no' means the installer will not change the default shell (default: yes)
-#   RUNZSH     - 'no' means the installer will not run zsh after the install (default: yes)
-#   KEEP_ZSHRC - 'yes' means the installer will not replace an existing .zshrc (default: no)
-#
-# You can also pass some arguments to the install script to set some these options:
-#   --skip-chsh: has the same behavior as setting CHSH to 'no'
-#   --unattended: sets both CHSH and RUNZSH to 'no'
-#   --keep-zshrc: sets KEEP_ZSHRC to 'yes'
-# For example:
-#   sh install.sh --unattended
-# or:
-#   sh -c "$(curl -fsSL https://gitlab.com/dantuck/dotfiles/-/raw/main/utils/install.sh)" "" --unattended
 #
 set -e
 
@@ -43,11 +25,6 @@ FISH=${ZSH:-${DOTS}/fish}
 REPO=${REPO:-dantuck/dotfiles}
 REMOTE=${REMOTE:-https://gitlab.com/${REPO}.git}
 BRANCH=${BRANCH:-main}
-
-# Other options
-CHSH=${CHSH:-yes}
-# KEEP_ZSHRC=${KEEP_ZSHRC:-no}
-
 
 command_exists() {
   command -v "$@" >/dev/null 2>&1
@@ -221,21 +198,13 @@ setup_dots() {
 
   cd ${DOTS}
 
-  # make all
-
-  
-
   echo
 }
 
-# shellcheck disable=SC2183  # printf string has more %s than arguments ($RAINBOW expands to multiple arguments)
 print_success() {
   printf '\n'
+  printf "%s %s %s\n" "Congrats! Dots is setup."
   printf '\n'
-  # printf "%s %s %s\n" "Look over the" \
-  #   "$(fmt_code "$(fmt_link ".zshrc" "file://$HOME/.zshrc" --text)")" \
-  #   "file to select plugins, themes, and options."
-  # printf '\n'
   printf '%s\n' $RESET
 }
 
@@ -248,33 +217,30 @@ main() {
   fi
 
   if [ -d "$DOTS" ]; then
-    echo "${YELLOW}The \$DOTS folder already exists ($DOTS).${RESET}"
+    echo "\n${YELLOW}The \$DOTS folder already exists ($DOTS).${RESET}"
     if [ "$custom_zsh" = yes ]; then
       cat <<EOF
 
-You ran the installer with the \$ZSH setting or the \$ZSH variable is
+You ran the installer with the \$DOTS setting or the \$DOTS variable is
 exported. You have 3 options:
 
-1. Unset the ZSH variable when calling the installer:
-   $(fmt_code "ZSH= sh install.sh")
+1. Unset the DOTS variable when calling the installer:
+   $(fmt_code "DOTS= sh install.sh")
 2. Install Dots to a directory that doesn't exist yet:
-   $(fmt_code "ZSH=path/to/new/dots/folder sh install.sh")
+   $(fmt_code "DOTS=path/to/new/dots/folder sh install.sh")
 3. (Caution) If the folder doesn't contain important information,
    you can just remove it with $(fmt_code "rm -r $DOTS")
 
 EOF
     else
-      echo "You'll need to remove it if you want to reinstall."
+      echo "You'll need to remove it if you want to reinstall.\n"
     fi
-    # exit 1
+    exit 1
   fi
 
   setup_dots
-  print_success
-
-  # exec fish -l
-
   exec fish -l ${DOTS}/fish/scripts/bootstrap.fish
+  print_success
 }
 
 main "$@"

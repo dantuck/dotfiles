@@ -125,6 +125,10 @@ mkdir -p ~/.config/fish/completions/
 	and success 'completions'
 	or abort 'completions'
 
+mkdir -p ~/.extra/functions/
+	and success '.extra/functions'
+	or abort '.extra/functions'
+
 for installer in $DOTFILES_ROOT/**/install.fish
 	fish $installer
 		and success $installer
