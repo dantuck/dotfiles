@@ -201,13 +201,6 @@ setup_dots() {
   echo
 }
 
-print_success() {
-  printf '\n'
-  printf "%s %s %s\n" "Congrats! Dots is setup."
-  printf '\n'
-  printf '%s\n' $RESET
-}
-
 main() {
   setup_color
 
@@ -240,7 +233,6 @@ EOF
 
   setup_dots
   exec fish -l ${DOTS}/fish/scripts/bootstrap.fish
-  print_success
 }
 
 main "$@"
