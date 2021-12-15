@@ -2,6 +2,7 @@
 set -Ux EDITOR vim
 set -Ux VISUAL $EDITOR
 set -Ux WEDITOR code
+set -U fish_greeting
 
 set -Ux DOTFILES ~/.dots
 
