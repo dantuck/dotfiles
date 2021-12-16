@@ -4,7 +4,7 @@ export DOTFILES="$HOME/.dots"
 
 # Check for updates on initial load...
 if [ "$DISABLE_AUTO_UPDATE" != "true" ]; then
-  source $DOTFILES/utils/check_for_upgrade.sh
+  source $DOTFILES/zsh/scripts/check_for_upgrade.sh
 fi
 
 typeset -U config_files

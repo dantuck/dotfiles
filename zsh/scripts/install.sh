@@ -1,14 +1,14 @@
 #!/bin/sh
 #
 # This script should be run via curl:
-#   sh -c "$(curl -fsSL https://gitlab.com/dantuck/dotfiles/-/raw/main/utils/install.sh)"
+#   sh -c "$(curl -fsSL https://gitlab.com/dantuck/dotfiles/-/raw/main/zsh/scripts/install.sh)"
 # or via wget:
-#   sh -c "$(wget -qO- https://gitlab.com/dantuck/dotfiles/-/raw/main/utils/install.sh)"
+#   sh -c "$(wget -qO- https://gitlab.com/dantuck/dotfiles/-/raw/main/zsh/scripts/install.sh)"
 # or via fetch:
-#   sh -c "$(fetch -o - https://gitlab.com/dantuck/dotfiles/-/raw/main/utils/install.sh)"
+#   sh -c "$(fetch -o - https://gitlab.com/dantuck/dotfiles/-/raw/main/zsh/scripts/install.sh)"
 #
 # As an alternative, you can first download the install script and run it afterwards:
-#   wget https://gitlab.com/dantuck/dotfiles/-/raw/main/utils/install.sh
+#   wget https://gitlab.com/dantuck/dotfiles/-/raw/main/zsh/scripts/install.sh
 #   sh install.sh
 #
 # You can tweak the install behavior by setting variables when running the script. For
@@ -33,7 +33,7 @@
 # For example:
 #   sh install.sh --unattended
 # or:
-#   sh -c "$(curl -fsSL https://gitlab.com/dantuck/dotfiles/-/raw/main/utils/install.sh)" "" --unattended
+#   sh -c "$(curl -fsSL https://gitlab.com/dantuck/dotfiles/-/raw/main/zsh/scripts/install.sh)" "" --unattended
 #
 set -e
 
@@ -225,7 +225,7 @@ setup_dots() {
 
   cd ${DOTS}
 
-  make all
+  . ./scripts/bootstrap
 
   echo
 }

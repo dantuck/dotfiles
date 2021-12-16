@@ -23,7 +23,7 @@ function update_last_updated_file() {
 }
 
 function update_dots() {
-  if DOTFILES="$DOTFILES" zsh -f "$DOTFILES/utils/upgrade.sh" --interactive; then
+  if DOTFILES="$DOTFILES" zsh -f "$DOTFILES/zsh/scripts/upgrade.sh" --interactive; then
     update_last_updated_file
   fi
 }

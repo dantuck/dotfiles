@@ -38,13 +38,15 @@ chsh -s /usr/bin/fish
 
 </details>
 
-## ZSH (no longer maintained)
+## ZSH
+
+This is really not maintained. I have been transitioning over to fish shell and while doing so have started to restructure dotfiles thus making the zsh install untested. Use at your own risk.
 
 ### Getting started
 
-```bash
+<!-- ```bash
 sh -c "$(curl -fsSL https://gitlab.com/dantuck/dotfiles/-/raw/main/utils/install.sh)"
-```
+``` -->
 
 ### Setup dotfile components
 
@@ -69,4 +71,4 @@ Influenced by and examples taken from:
 
 - [mnarrell](https://github.com/mnarrell/dotfiles)
 - [kwtucker](https://github.com/kwtucker/dotfiles)
-- [caarlos0](https://github.com/caarlos0/dotfiles.fish) [LICENSE](license/LICENSE-CARLOSBECKER.md)
+- [caarlos0](https://github.com/caarlos0/dotfiles.fish) ([LICENSE](license/LICENSE-CARLOSBECKER.md))

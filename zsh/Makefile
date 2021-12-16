@@ -1,17 +1,19 @@
-include ../env.mk
+MODULES = git zsh docker
 
-install: .ensure.xdg
-	ln -sfn $(CURDIR) $(XDG_CONFIG_HOME)/zsh
-	mkdir -p $(XDG_CACHE_HOME)/zsh
-	mkdir -p $(XDG_CONFIG_HOME)/zsh
-	mkdir -p $(XDG_DATA_HOME)/zsh
-	# antibody bundle < $(CURDIR)/bundle > ${XDG_DATA_HOME}/zsh/plugins
-	ln -sf $(CURDIR)/zshenv $(HOME)/.zshenv
+CLEAN := $(addsuffix .clean,$(MODULES))
 
-clean: .remove.xdg.module.zsh
-	rm -rf $(HOME)/.zshenv
-	rm -rf $(XDG_CONFIG_HOME)/zsh
-	rm -rf ${XDG_CACHE_HOME}/zsh
-	rm -rf $(XDG_DATA_HOME)/zsh
+$(MODULES):
+	$(MAKE) -C $@
 
-.PHONY: install clean
+$(CLEAN):
+	$(MAKE) -C $(basename $@) clean
+
+all: $(MODULES) ## Make it all
+
+clean.all: $(CLEAN)
+
+.PHONY: $(MODULES) $(CLEAN) all clean.all
+
+help: ## Prints help for targets with comments
+	@cat $(MAKEFILE_LIST) | grep -E '^[a-zA-Z_-]+:.*?## .*$$' | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+

@@ -74,7 +74,7 @@ if git pull --rebase --stat origin main; then
 
     # Display changelog with less if available, otherwise just print it to the terminal
     if [[ "$1" = --interactive ]]; then
-      "$DOTFILES/utils/changelog.sh" HEAD "$last_commit"
+      "$DOTFILES/zsh/scripts/changelog.sh" HEAD "$last_commit"
     fi
   fi
 
