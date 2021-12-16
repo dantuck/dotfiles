@@ -7,8 +7,7 @@ function dots -d "dots management utility"
         fish $DOTFILES/fish/scripts/bootstrap.fish
         popd
 
-    case 'cd'
-    case '*'
+    case 'cd' '*'
         pushd $DOTFILES
         git pull
     end
