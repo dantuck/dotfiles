@@ -5,8 +5,7 @@ if test -e ~/.local/share/fonts/Inconsolata[wdth,wght].ttf ||
 end
 
 function install
-	curl -fLo "FiraCode Nerd Font Complete.ttf" \
-    hhttps://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/FiraCode/Regular/complete/Fira%20Code%20Nerd%20Font%20Complete.ttf
+	curl -Lso $argv[1]/FiraCodeRegularNerdFontComplete.ttf https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/FiraCode/Regular/complete/Fira%20Code%20Regular%20Nerd%20Font%20Complete.ttf
 end
 
 switch (uname)
