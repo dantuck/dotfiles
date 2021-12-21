@@ -97,12 +97,8 @@ function install_dotfiles
 		or abort plugins
 	link_file $DOTFILES_ROOT/fish/bat/config $HOME/.config/bat/config backup
 		or abort bat
-	# link_file $DOTFILES_ROOT/htop/htoprc $HOME/.config/htop/htoprc backup
-	# 	or abort htoprc
 	# link_file $DOTFILES_ROOT/ssh/config.dotfiles $HOME/.ssh/config.dotfiles backup
 	# 	or abort ssh
-	# link_file $DOTFILES_ROOT/kitty/kitty.conf $HOME/.config/kitty/kitty.conf backup
-	# 	or abort kitty
 end
 
 curl -sL git.io/fisher | source && fisher install jorgebucaran/fisher
