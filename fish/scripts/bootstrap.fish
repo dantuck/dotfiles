@@ -93,8 +93,8 @@ function install_dotfiles
 			or abort 'failed to link config file'
 	end
 
-	# link_file $DOTFILES_ROOT/fisher/plugins $__fish_config_dir/fish_plugins backup
-	# 	or abort plugins
+	link_file $DOTFILES_ROOT/fisher/plugins $__fish_config_dir/fish_plugins backup
+		or abort plugins
 	link_file $DOTFILES_ROOT/bat/config $HOME/.config/bat/config backup
 		or abort bat
 	# link_file $DOTFILES_ROOT/htop/htoprc $HOME/.config/htop/htoprc backup
@@ -105,9 +105,9 @@ function install_dotfiles
 	# 	or abort kitty
 end
 
-# curl -sL git.io/fisher | source && fisher install jorgebucaran/fisher
-# 	and success 'fisher'
-# 	or abort 'fisher'
+curl -sL git.io/fisher | source && fisher install jorgebucaran/fisher
+	and success 'fisher'
+	or abort 'fisher'
 
 setup_gitconfig
 	and success 'gitconfig'
@@ -117,9 +117,9 @@ install_dotfiles
 	and success 'dotfiles'
 	or abort 'dotfiles'
 
-# fisher update
-# 	and success 'plugins'
-# 	or abort 'plugins'
+fisher update
+	and success 'plugins'
+	or abort 'plugins'
 
 mkdir -p ~/.config/fish/completions/
 	and success 'completions'
@@ -129,10 +129,18 @@ mkdir -p ~/.extra/functions/
 	and success '.extra/functions'
 	or abort '.extra/functions'
 
+mkdir -p ~/.extra/plugins/
+	and success '.extra/plugins'
+	or abort '.extra/plugins'
+
 for installer in $DOTFILES_ROOT/**/install.fish
 	fish $installer
 		and success $installer
 		or abort $installer
+end
+
+for plugin in ~/.extra/plugins/*
+	fisher install $plugin
 end
 
 test (which fish) = $SHELL
