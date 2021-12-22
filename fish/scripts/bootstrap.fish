@@ -87,7 +87,6 @@ function link_file -d "links a file keeping a backup"
 end
 
 function install_dotfiles
-    # echo $DOTFILES_ROOT
 	for src in $DOTFILES_ROOT/**/*.symlink`
 		link_file $src $HOME/.(basename $src .symlink) backup
 			or abort 'failed to link config file'

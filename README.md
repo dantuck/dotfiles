@@ -45,6 +45,18 @@ chsh -s /usr/bin/fish
 
 </details>
 
+#### Customizations
+
+`fish` plugins are managed by `fisher` and can be cloned directly into `~/.extra/plugins` or added directly to a new file `~/.extra/plugins/fish_plugins`
+
+```bash
+jorgebucaran/fisher
+jorgebucaran/nvm.fish
+jorgebucaran/replay.fish
+```
+
+Add custom functions to `~/.extra/functions`
+
 ## ZSH
 
 This is really not maintained. I have been transitioning over to fish shell and while doing so have started to restructure dotfiles thus making the zsh install untested. Use at your own risk.
