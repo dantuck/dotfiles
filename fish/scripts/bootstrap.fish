@@ -88,13 +88,16 @@ end
 
 function install_dotfiles
     # echo $DOTFILES_ROOT
-	for src in $DOTFILES_ROOT/**/*.symlink
+	for src in $DOTFILES_ROOT/**/*.symlink`
 		link_file $src $HOME/.(basename $src .symlink) backup
 			or abort 'failed to link config file'
 	end
 
-	link_file $DOTFILES_ROOT/fish/fisher/plugins $__fish_config_dir/fish_plugins backup
-		or abort plugins
+	if test -f ~/.extra/plugins/plugins
+		link_file ~/.extra/plugins/plugins $__fish_config_dir/fish_plugins backup
+			or abort plugins
+	end
+
 	link_file $DOTFILES_ROOT/fish/bat/config $HOME/.config/bat/config backup
 		or abort bat
 	# link_file $DOTFILES_ROOT/ssh/config.dotfiles $HOME/.ssh/config.dotfiles backup
@@ -121,6 +124,12 @@ mkdir -p ~/.config/fish/completions/
 	and success 'completions'
 	or abort 'completions'
 
+for installer in $DOTFILES_ROOT/**/install.fish
+	fish $installer
+		and success $installer
+		or abort $installer
+end
+
 mkdir -p ~/.extra/functions/
 	and success '.extra/functions'
 	or abort '.extra/functions'
@@ -128,12 +137,6 @@ mkdir -p ~/.extra/functions/
 mkdir -p ~/.extra/plugins/
 	and success '.extra/plugins'
 	or abort '.extra/plugins'
-
-for installer in $DOTFILES_ROOT/**/install.fish
-	fish $installer
-		and success $installer
-		or abort $installer
-end
 
 for plugin in ~/.extra/plugins/*
 	fisher install $plugin
