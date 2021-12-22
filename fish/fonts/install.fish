@@ -20,6 +20,6 @@ case '*'
 	mkdir -p ~/.local/share/fonts/
 		and install ~/.local/share/fonts/
 	if command -qs fc-cache
-		fc-cache -fv
+		fc-cache -f
 	end
 end
