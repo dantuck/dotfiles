@@ -93,8 +93,8 @@ function install_dotfiles
 			or abort 'failed to link config file'
 	end
 
-	if test -f ~/.extra/plugins/plugins
-		link_file ~/.extra/plugins/plugins $__fish_config_dir/fish_plugins backup
+	if test -f ~/.extra/plugins/fish_plugins
+		link_file ~/.extra/plugins/fish_plugins $__fish_config_dir/fish_plugins backup
 			or abort plugins
 	end
 
