@@ -4,6 +4,7 @@ For both Linux and macOS:
 
 - [`starship.rs`](https://starship.rs) the shell we are using;
 - [`bat`](https://github.com/sharkdp/bat) a `cat` with wings;
+- [`delta`](https://github.com/dandavison/delta) for better git diffs;
 
 ## Fish
 
