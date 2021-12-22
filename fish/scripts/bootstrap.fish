@@ -139,7 +139,9 @@ mkdir -p ~/.extra/plugins/
 	or abort '.extra/plugins'
 
 for plugin in ~/.extra/plugins/*
-	fisher install $plugin
+	if test -d $plugin
+		fisher install $plugin
+	end
 end
 
 test (which fish) = $SHELL
