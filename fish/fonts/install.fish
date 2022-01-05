@@ -12,7 +12,7 @@ switch (uname)
 case Darwin
 	if command -qs brew
 		brew tap homebrew/cask-fonts &&
-			and brew install --cask font-firacode-nerd-font
+			and brew install --cask font-fira-code-nerd-font
 	else
 		install ~/Library/Fonts
 	end
