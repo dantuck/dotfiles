@@ -45,5 +45,8 @@
 [url "git@github.com:"]
 	insteadOf = http://github.com/
 	insteadOf = https://github.com/
+[url "git@gitlab.com:"]
+	insteadOf = http://gitlab.com/
+	insteadOf = https://gitlab.com/
 [format]
 	signOff = true
