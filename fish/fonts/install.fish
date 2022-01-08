@@ -1,6 +1,6 @@
 #!/usr/bin/env fish
-if test -e ~/.local/share/fonts/Inconsolata[wdth,wght].ttf ||
-	test -e ~/Library/Fonts/Inconsolata[wdth,wght].ttf
+if test -e ~/.local/share/fonts/FiraCodeRegularNerdFontComplete.ttf ||
+	test -e ~/Library/Fonts/FiraCodeRegularNerdFontComplete.ttf
 	exit 0
 end
 
