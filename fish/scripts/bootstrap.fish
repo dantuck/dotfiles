@@ -87,7 +87,7 @@ function link_file -d "links a file keeping a backup"
 end
 
 function install_dotfiles
-	for src in $DOTFILES_ROOT/**/*.symlink`
+	for src in $DOTFILES_ROOT/fish/**/*.symlink
 		link_file $src $HOME/.(basename $src .symlink) backup
 			or abort 'failed to link config file'
 	end
@@ -107,13 +107,13 @@ curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher
 	and success 'fisher'
 	or abort 'fisher'
 
-setup_gitconfig
-	and success 'gitconfig'
-	or abort 'gitconfig'
-
 install_dotfiles
 	and success 'dotfiles'
 	or abort 'dotfiles'
+
+setup_gitconfig
+	and success 'gitconfig'
+	or abort 'gitconfig'
 
 fisher update
 	and success 'plugins'

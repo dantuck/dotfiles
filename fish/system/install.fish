@@ -8,7 +8,7 @@ set -Ux DOTFILES ~/.dots
 
 set -Ua fish_user_paths $DOTFILES/fish/bin $HOME/.bin
 
-for f in $DOTFILES/fish/*/functions
+for f in $DOTFILES/fish/**/functions
 	set -Up fish_function_path $f
 end
 
