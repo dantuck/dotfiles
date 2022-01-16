@@ -6,6 +6,7 @@ For both Linux and macOS:
 - [`bat`](https://github.com/sharkdp/bat) a `cat` with wings;
 - [`delta`](https://github.com/dandavison/delta) for better git diffs;
 - [`pnpm`](https://pnpm.io/) fast, disk space efficient package manager
+- [`rust-lang`](https://www.rust-lang.org/learn/get-started) Quickly set up a Rust development environment and write a small app!
 
 ## Fish
 

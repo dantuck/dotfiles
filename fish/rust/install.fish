@@ -1,2 +1,8 @@
 #!/usr/bin/env fish
-set -Ua fish_user_paths $HOME/.cargo/bin
+if command -qa rustup
+    rustup update
+end
+
+if command -qa cargo
+    set -Ua fish_user_paths $HOME/.cargo/bin
+end
