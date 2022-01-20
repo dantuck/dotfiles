@@ -8,6 +8,13 @@ For both Linux and macOS:
 - [`pnpm`](https://pnpm.io/) fast, disk space efficient package manager
 - [`rust-lang`](https://www.rust-lang.org/learn/get-started) Quickly set up a Rust development environment and write a small app!
 
+For macOS:
+
+- `kubectl` - `brew install kubernetes-cli`
+- `kubectx` - `brew install kubectx`
+- `aws-iam-authenticator` - `brew install aws-iam-authenticator`
+- `kubefwd` - `brew install txn2/tap/kubefwd`
+
 ## Fish
 
 ### Getting started
