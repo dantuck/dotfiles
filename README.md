@@ -7,6 +7,7 @@ For both Linux and macOS:
 - [`delta`](https://github.com/dandavison/delta) for better git diffs;
 - [`pnpm`](https://pnpm.io/) fast, disk space efficient package manager
 - [`rust-lang`](https://www.rust-lang.org/learn/get-started) Quickly set up a Rust development environment and write a small app!
+- ['httpie'](https://httpie.io/cli) A simple yet powerful command-line HTTP and API testing client for the API era.
 
 For macOS:
 
