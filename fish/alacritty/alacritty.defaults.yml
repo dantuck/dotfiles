@@ -12,8 +12,6 @@ env:
   TERM: xterm-256color
 
 
-import:
-  - ~/.extra/alacritty.override.yml
 
 window:
   # Window dimensions in character columns and lines
