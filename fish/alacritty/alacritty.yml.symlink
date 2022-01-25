@@ -12,12 +12,8 @@ env:
   TERM: xterm-256color
 
 
-shell:
-  program: /usr/bin/fish
-  args:
-    - -l
-    - -c
-    - "zellij"
+import:
+  - ~/.extra/alacritty.override.yml
 
 window:
   # Window dimensions in character columns and lines
