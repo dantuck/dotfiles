@@ -4,6 +4,10 @@
 
 set DOTFILES_ROOT (pwd -P)
 
+for f in $DOTFILES/fish/scripts/helpers
+	set -Up fish_function_path $f
+end
+
 function info
 	echo [(set_color --bold) ' .. ' (set_color normal)] $argv
 end

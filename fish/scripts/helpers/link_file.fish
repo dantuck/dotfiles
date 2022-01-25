@@ -1,3 +1,4 @@
+#!/usr/bin/env fish
 function link_file -d "links a file keeping a backup"
 	echo $argv | read -l old new backup
 	if test -e $new
@@ -15,13 +16,4 @@ function link_file -d "links a file keeping a backup"
 		and ln -sf $old $new
 		and success "linked $old to $new"
 		or abort "could not link $old to $new"
-end
-
-function success
-	echo [(set_color --bold green) ' OK ' (set_color normal)] $argv
-end
-
-function abort
-	echo [(set_color --bold yellow) ABRT (set_color normal)] $argv
-	exit 1
 end
