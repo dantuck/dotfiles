@@ -24,6 +24,6 @@ for f in ~/.extra/functions
 	set -Up fish_function_path $f
 end
 
-abbr -a c 'clear'
+abbr --erase c
 abbr -a mb 'mkdir -p'
 abbr -a rd 'rmdir'
