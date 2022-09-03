@@ -7,6 +7,9 @@ function dots -d "dots management utility"
         fish $DOTFILES/fish/scripts/bootstrap.fish
         popd
 
+    case 'config'
+        vim ~/.config/fish/config.fish
+
     case 'cd' '*'
         pushd $DOTFILES
         git pull
