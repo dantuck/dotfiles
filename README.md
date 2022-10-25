@@ -7,6 +7,7 @@ For both Linux and macOS:
 - [`delta`](https://github.com/dandavison/delta) for better git diffs;
 - [`pnpm`](https://pnpm.io/) fast, disk space efficient package manager
 - [`rust-lang`](https://www.rust-lang.org/learn/get-started) Quickly set up a Rust development environment and write a small app!
+- [`helix`](https://helix-editor.com/) a post-modern text editor.  
 
 For macOS:
 
