@@ -1,8 +1,6 @@
 #!/usr/bin/env fish
-if ! test -e $HOME/.rover/bin/rover
-	exit 0
+if test -f $HOME/.rover/bin/rover
+	fish_add_path -aP $HOME/.rover/bin
+
+    set -Ux APOLLO_TELEMETRY_DISABLED 1
 end
-
-fish_add_path $HOME/.rover/bin
-
-set -Ux APOLLO_TELEMETRY_DISABLED 1
