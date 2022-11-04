@@ -16,6 +16,12 @@ For macOS:
 - `aws-iam-authenticator` - `brew install aws-iam-authenticator`
 - `kubefwd` - `brew install txn2/tap/kubefwd`
 
+## Optional Software
+
+For both Linux and macOS:
+
+- [`Apollo Rover CLI`](https://www.apollographql.com/docs/rover/getting-started/) is a CLI for managing and maintaining graphs with [Apollo Studio](https://www.apollographql.com/docs/studio/)
+
 ## Fish
 
 ### Getting started
@@ -81,8 +87,9 @@ sh -c "$(curl -fsSL https://gitlab.com/dantuck/dotfiles/-/raw/main/utils/install
 ### Setup dotfile components
 
 *NOTE*: Make sure if needed to create local files first:
- - git: [user] name and email and [url] instead of mapping
- - zsh: environment variables with usernames and tokens set.
+
+- git: [user] name and email and [url] instead of mapping
+- zsh: environment variables with usernames and tokens set.
 
 ```shell
 .dotfiles/git/config.local
