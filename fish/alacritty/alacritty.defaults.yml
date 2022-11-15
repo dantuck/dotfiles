@@ -11,8 +11,6 @@ env:
   # `infocmp xterm-256color`.
   TERM: xterm-256color
 
-
-
 window:
   # Window dimensions in character columns and lines
   # (changes require restart)
@@ -83,33 +81,25 @@ font:
   #  x: 0
   #  y: 0
 
-  # OS X only: use thin stroke font rendering. Thin strokes are suitable
-  # for retina displays, but for non-retina you probably want this set to
-  # false.
-  use_thin_strokes: true
-
-schemes:
-  onedark: &onedark
-    primary:
-      background: "#282c34"
-      foreground: "#abb2bf"
-    # cursor:
-    #   text:       CellBackground
-    #   cursor:     '#528bff' # syntax-cursor-color
-    selection:
-      text: CellForeground
-      background: "#3e4451" # syntax-selection-color
-    normal:
-      black: "#5c6370" # mono-3
-      red: "#e06c75" # red 1
-      green: "#98c379"
-      yellow: "#e5c07b" # orange 2
-      blue: "#61afef"
-      magenta: "#c678dd"
-      cyan: "#56b6c2"
-      white: "#828997" # mono-2
-
-colors: *onedark
+colors: 
+  primary:
+    background: '#282c34'
+    foreground: '#abb2bf'
+  cursor:
+    text:       CellBackground
+    cursor:     '#FF8C00' # syntax-cursor-color - #528bff
+  selection:
+    text:       CellForeground
+    background: '#3e4451' # syntax-selection-color FF8C00
+  normal:
+    black:      '#5c6370' # mono-3
+    red:        '#e06c75' # red 1
+    green:      '#98c379'
+    yellow:     '#e5c07b' # orange 2
+    blue:       '#61afef'
+    magenta:    '#c678dd'
+    cyan:       '#56b6c2'
+    white:      '#828997' # mono-2
 
 debug:
   # Should display the render timer
