@@ -1,10 +1,10 @@
 #!/bin/sh
 #
 # This script should be run via curl:
-#   curl -fsSL https://gitlab.com/dantuck/dotfiles/-/raw/main/fish/scripts/install.sh | sh"
+#   curl -fsSL https://codeberg.org/tuck/dotfiles/raw/branch/main/fish/scripts/install.sh | sh"
 #
 # As an alternative, you can first download the install script and run it afterwards:
-#   wget https://gitlab.com/dantuck/dotfiles/-/raw/fish/utils/install.sh
+#   wget https://codeberg.org/tuck/dotfiles/raw/branch/main/fish/scripts/install.sh
 #   sh install.sh
 #
 # You can tweak the install behavior by setting variables when running the script. For
@@ -13,8 +13,8 @@
 #
 # Respects the following environment variables:
 #   DOTS     - path to the Oh My Zsh repository folder (default: $HOME/.dots)
-#   REPO    - name of the Gitlab repo to install from (default: dantuck/dotfiles)
-#   REMOTE  - full remote URL of the git repo to install (default: Gitlab via HTTPS)
+#   REPO    - name of the Codeberg repo to install from (default: dantuck/dotfiles)
+#   REMOTE  - full remote URL of the git repo to install (default: Codeberg via HTTPS)
 #   BRANCH  - branch to check out immediately after install (default: main)
 #
 set -e
@@ -22,8 +22,8 @@ set -e
 # Default settings
 DOTS=${DOTS:-~/.dots}
 FISH=${ZSH:-${DOTS}/fish}
-REPO=${REPO:-dantuck/dotfiles}
-REMOTE=${REMOTE:-https://gitlab.com/${REPO}.git}
+REPO=${REPO:-tuck/dotfiles}
+REMOTE=${REMOTE:-https://codeberg.org/${REPO}.git}
 BRANCH=${BRANCH:-main}
 
 command_exists() {

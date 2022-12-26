@@ -27,13 +27,13 @@ For both Linux and macOS:
 ### Getting started
 
 ```fish
-curl -fsSL https://gitlab.com/dantuck/dotfiles/-/raw/main/fish/scripts/install.sh | sh
+curl -fsSL https://codeberg.org/tuck/dotfiles/raw/branch/main/fish/scripts/install.sh | sh
 ```
 
 or
 
 ```bash
-sh -c "$(curl -fsSL https://gitlab.com/dantuck/dotfiles/-/raw/main/fish/scripts/install.sh)"
+sh -c "$(curl -fsSL https://codeberg.org/tuck/dotfiles/raw/branch/main/fish/scripts/install.sh)"
 ```
 
 ### Install fish
@@ -81,7 +81,7 @@ This is really not maintained. I have been transitioning over to fish shell and 
 ### Getting started
 
 <!-- ```bash
-sh -c "$(curl -fsSL https://gitlab.com/dantuck/dotfiles/-/raw/main/utils/install.sh)"
+sh -c "$(curl -fsSL https://codeberg.org/tuck/dotfiles/raw/branch/main/fish/scripts/install.sh)"
 ``` -->
 
 ### Setup dotfile components
