@@ -6,5 +6,5 @@ if command -qa iex
 end
 
 if command -qa mix
-    abbr -a mixg 'mix deps.get'
+    abbr -a mixdg 'mix deps.get'
 end
