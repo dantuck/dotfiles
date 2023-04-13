@@ -158,8 +158,10 @@ EOF
     setup_dots
   fi
 
+  cd $DOTS
+
   chmod +x dots
-  echo "${BLUE}Linking \"$PWD/dots\" /usr/bin/dots"
+  echo "${BLUE}Linking \"$PWD/dots\" /usr/local/bin/dots"
   echo "> [sudo] required to run:"
   echo "> sudo ln -sf \"$PWD/dots\" /usr/bin/dots${RESET}"
   sudo ln -sf "$PWD/dots" /usr/bin/dots
