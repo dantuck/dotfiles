@@ -1,4 +1,4 @@
-function dots -d "dots management utility"
+function dots_fish -d "dots management utility"
     switch $argv[1]
     case 'update'
         pushd $DOTFILES
