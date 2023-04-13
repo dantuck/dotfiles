@@ -61,7 +61,7 @@ _usage() {
 Usage: dots {action}
 actions:
      edit - open '$DOTS' directory in default $EDITOR
-     reload - clock out of project
+     reload - reload shell
      up,update - update
 EOF
 }
