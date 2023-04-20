@@ -7,7 +7,8 @@ For both Linux and macOS:
 - [`delta`](https://github.com/dandavison/delta) for better git diffs;
 - [`pnpm`](https://pnpm.io/) fast, disk space efficient package manager
 - [`rust-lang`](https://www.rust-lang.org/learn/get-started) Quickly set up a Rust development environment and write a small app!
-- [`helix`](https://helix-editor.com/) a post-modern text editor.  
+- [`helix`](https://helix-editor.com/) a post-modern text editor. 
+- [`zellij`](https://zellij.dev) a terminal workspace with batteries included. 
 
 For macOS:
 
@@ -27,13 +28,13 @@ For both Linux and macOS:
 ### Getting started
 
 ```fish
-curl -fsSL https://codeberg.org/tuck/dotfiles/raw/branch/main/fish/scripts/install.sh | sh
+curl -fsSL https://codeberg.org/tuck/dotfiles/raw/branch/main/install.sh | sh
 ```
 
 or
 
 ```bash
-sh -c "$(curl -fsSL https://codeberg.org/tuck/dotfiles/raw/branch/main/fish/scripts/install.sh)"
+sh -c "$(curl -fsSL https://codeberg.org/tuck/dotfiles/raw/branch/main/install.sh)"
 ```
 
 ### Install fish
