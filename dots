@@ -27,9 +27,9 @@ _update() {
   git pull
 
   if [ -n $FISH_VERSION ]; then
-    fish $DOTS/fish/scripts/bootstrap.fish
+    exec fish -l $DOTS/fish/scripts/bootstrap.fish
   elif [ -n $nu.home-path ]; then
-    echo "nushell"
+    echo "nushell coming soon"
   else
     echo "not supported"
   fi
@@ -51,6 +51,29 @@ _update() {
   popd > /dev/null 2> /dev/null
 }
 
+_install() {
+  case "$2" in
+    fish)
+      if ! command_exists fish; then
+        echo "${YELLOW}Fish is not installed.${RESET} Please install fish first."
+        exit 1
+      fi
+      exec fish -l ${DOTS}/fish/scripts/bootstrap.fish
+      ;;
+    nushell)
+      fmt_error "$2 is not yet supported."
+      exit 1
+      ;;
+    *)
+      if ! command_exists fish; then
+        echo "${YELLOW}Fish is not installed.${RESET} Please install fish first."
+        exit 1
+      fi
+      exec fish -l ${DOTS}/fish/scripts/bootstrap.fish
+      ;;
+  esac
+}
+
 _reload() {
   exec "$SHELL" -l
 }
@@ -63,6 +86,7 @@ actions:
      edit - open '$DOTS' directory in default $EDITOR
      reload - reload shell
      up,update - update
+     install - install for shell
 EOF
 }
 
@@ -74,6 +98,7 @@ case "${action}" in
   reload)   _reload;;
   up)       _update;;
   update)   _update;;
+  install)  _install "$@";;
 
   help)     _usage;;
   --help)   _usage;;
