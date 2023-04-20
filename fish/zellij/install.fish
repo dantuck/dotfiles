@@ -9,7 +9,7 @@ function test_version
     set zellij_version_minor $zellij_version_info[2]
     set zellij_version_patch $zellij_version_info[3]
 
-    if test $zellij_version_minor -lt 32
+    if test $zellij_version_minor -lt 36
         abort "please update zellij: `cargo install --locked zellij`"
     end
 end

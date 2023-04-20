@@ -334,3 +334,9 @@ env {
     RUST_BACKTRACE 1
     FOO "bar"
 }
+
+ui {
+    pane_frames {
+        hide_session_name true
+    }
+}
