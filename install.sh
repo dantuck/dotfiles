@@ -1,14 +1,14 @@
 #!/bin/sh
 #
 # This script should be run via curl:
-#   curl -fsSL https://codeberg.org/tuck/dotfiles/raw/branch/main/nushell/install.sh | sh"
+#   curl -fsSL https://codeberg.org/tuck/dotfiles/raw/branch/main/install.sh | sh"
 #
 # As an alternative, you can first download the install script and run it afterwards:
-#   wget https://codeberg.org/tuck/dotfiles/raw/branch/main/nushell/install.sh
+#   wget https://codeberg.org/tuck/dotfiles/raw/branch/main/install.sh
 #   sh install.sh
 #
 # You can tweak the install behavior by setting variables when running the script. For
-# example, to change the path to the Oh My Zsh repository:
+# example, to change the path of the dotfiles to ~/.dotfiles:
 #   DOTS=~/.dotfiles sh install.sh
 #
 # Respects the following environment variables:
@@ -20,10 +20,11 @@
 set -e
 
 # Default settings
-DOTS=${DOTS:-~/.dots}
+DOTS=${DOTS:-$HOME/.dots}
 REPO=${REPO:-tuck/dotfiles}
 REMOTE=${REMOTE:-https://codeberg.org/${REPO}.git}
 BRANCH=${BRANCH:-main}
+INSTALL_FOR_SHELL=${1:-fish}
 
 # The [ -t 1 ] check only works when the function is not called from
 # a subshell (like in `$(...)` or `(...)`, so this hack redefines the
@@ -167,7 +168,7 @@ EOF
   sudo ln -sf "$PWD/dots" /usr/local/bin/dots
 
   echo
-  exec ./dots
+  exec ./dots install ${INSTALL_FOR_SHELL}
 }
 
 main "$@"
