@@ -14,8 +14,22 @@ else
   }
 fi
 
-command_exists() {
+command_exists?() {
   command -v "$@" >/dev/null 2>&1
+}
+
+confirm?() {
+  local question=$1
+  local default=${2:-Y}
+
+  read -r -p "$question [Y/n] " response
+  response=${response,,}    # convert input to lowercase
+
+  if [[ $response =~ ^(yes|y| ) || -z $response ]]; then
+      return 0    # Confirmed
+  else
+      return 1    # Cancelled
+  fi
 }
 
 # This function uses the logic from supports-hyperlinks[1][2], which is
@@ -73,6 +87,31 @@ supports_hyperlinks() {
   fi
 
   return 1
+}
+
+info_header() {
+  local string="$1"
+  local color="${2:-BLUE}"
+  local desired_length=60
+
+  local num_dashes=$((desired_length - ${#string}))
+  local dashes=$(printf '%*s' "$num_dashes" | tr ' ' '-')
+
+  case $color in
+    yellow|YELLOW*)
+      echo "${YELLOW}---- $string $dashes${RESET}" ;;  
+    *) 
+      echo "${BLUE}---- $string $dashes${RESET}" ;;
+  esac
+}
+
+# usage: write_line_to_file_if_not_exists "some_line" "/some/file"
+write_line_to_file_if_not_exists() {
+	local LINE="$1"
+	local FILE="$2"
+
+	echo "Appending ${LINE} to ${FILE} if not exists."
+	grep -qxF "$LINE" "$FILE" || echo "$LINE" | sudo tee -a "$FILE"
 }
 
 fmt_link() {
