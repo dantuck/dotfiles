@@ -54,7 +54,7 @@ _update() {
 _install() {
   case "$2" in
     fish)
-      if ! command_exists fish; then
+      if ! command_exists? fish; then
         echo "${YELLOW}Fish is not installed.${RESET} Please install fish first."
         exit 1
       fi
@@ -64,12 +64,14 @@ _install() {
       fmt_error "$2 is not yet supported."
       exit 1
       ;;
-    *)
-      if ! command_exists fish; then
-        echo "${YELLOW}Fish is not installed.${RESET} Please install fish first."
-        exit 1
-      fi
-      exec fish -l ${DOTS}/fish/scripts/bootstrap.fish
+    nix-fish*)
+      chmod +x "${DOTS}/nix/install.sh"
+      exec ${DOTS}/nix/install.sh
+      # if ! command_exists? fish; then
+      #   echo "${YELLOW}Fish is not installed.${RESET} Please install fish first."
+      #   exit 1
+      # fi
+      # exec fish -l ${DOTS}/fish/scripts/bootstrap.fish
       ;;
   esac
 }
