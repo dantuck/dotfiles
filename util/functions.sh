@@ -14,6 +14,47 @@ else
   }
 fi
 
+# Only use colors if connected to a terminal
+if is_tty; then
+  RAINBOW="
+    $(printf '\033[38;5;196m')
+    $(printf '\033[38;5;202m')
+    $(printf '\033[38;5;226m')
+    $(printf '\033[38;5;082m')
+    $(printf '\033[38;5;021m')
+    $(printf '\033[38;5;093m')
+    $(printf '\033[38;5;163m')
+  "
+  RED=$(printf '\033[31m')
+  GREEN=$(printf '\033[32m')
+  YELLOW=$(printf '\033[33m')
+  BLUE=$(printf '\033[34m')
+  BOLD=$(printf '\033[1m')
+  RESET=$(printf '\033[m')
+else
+  RAINBOW=""
+  RED=""
+  GREEN=""
+  YELLOW=""
+  BLUE=""
+  BOLD=""
+  RESET=""
+fi
+
+# if test -n "$ZSH_VERSION"; then
+#   PROFILE_SHELL=zsh
+# elif test -n "$BASH_VERSION"; then
+#   PROFILE_SHELL=bash
+# elif test -n "$KSH_VERSION"; then
+#   PROFILE_SHELL=ksh
+# elif test -n "$FCEDIT"; then
+#   PROFILE_SHELL=ksh
+# elif test -n "$PS3"; then
+#   PROFILE_SHELL=unknown
+# else
+#   PROFILE_SHELL=sh
+# fi
+
 command_exists?() {
   command -v "$@" >/dev/null 2>&1
 }
@@ -138,35 +179,6 @@ fmt_code() {
 
 fmt_error() {
   printf '%sError: %s%s\n' "$BOLD$RED" "$*" "$RESET" >&2
-}
-
-setup_color() {
-  # Only use colors if connected to a terminal
-  if is_tty; then
-    RAINBOW="
-      $(printf '\033[38;5;196m')
-      $(printf '\033[38;5;202m')
-      $(printf '\033[38;5;226m')
-      $(printf '\033[38;5;082m')
-      $(printf '\033[38;5;021m')
-      $(printf '\033[38;5;093m')
-      $(printf '\033[38;5;163m')
-    "
-    RED=$(printf '\033[31m')
-    GREEN=$(printf '\033[32m')
-    YELLOW=$(printf '\033[33m')
-    BLUE=$(printf '\033[34m')
-    BOLD=$(printf '\033[1m')
-    RESET=$(printf '\033[m')
-  else
-    RAINBOW=""
-    RED=""
-    GREEN=""
-    YELLOW=""
-    BLUE=""
-    BOLD=""
-    RESET=""
-  fi
 }
 
 setup_xdg() {
