@@ -21,15 +21,26 @@ else
 fi
 
 _set_default_shell() {
-	local line=$(command -v fish)
-	local file="/etc/shells"
+	local FISH_PATH=$(command -v fish)
+	local ETC_SHELLS="/etc/shells"
 
-	info_header "Set default shell (sudo)"
+  if [ "$SHELL" = "$FISH_PATH" ]; then
+    return 0
+  else
+    info_header "Set default shell (sudo)"
 
-	write_line_to_file_if_not_exists "${line}" "${file}"
+    write_line_to_file_if_not_exists "${FISH_PATH}" "${ETC_SHELLS}"
 
-	echo "Changing default shell to fish"
-	chsh -s "${line}"
+    echo "Changing default shell to fish"
+    chsh -s "${FISH_PATH}"
+
+    cat << EOF
+
+${GREEN}The DEFAULT shell has been updated to "${FISH_PATH}".${RESET}
+In order for it to take effect you must logout and back in.
+
+EOF
+  fi
 }
 
 _install_nix?() {
