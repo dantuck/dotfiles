@@ -24,7 +24,7 @@ DOTS=${DOTS:-$HOME/.dots}
 REPO=${REPO:-tuck/dotfiles}
 REMOTE=${REMOTE:-https://codeberg.org/${REPO}.git}
 BRANCH=${BRANCH:-main}
-INSTALL_FOR_SHELL=${1:-nix-fish}
+INSTALL_FOR_SHELL=${1:-fish}
 
 # The [ -t 1 ] check only works when the function is not called from
 # a subshell (like in `$(...)` or `(...)`, so this hack redefines the
