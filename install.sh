@@ -12,7 +12,7 @@
 #   DOTS=~/.dotfiles sh install.sh
 #
 # Respects the following environment variables:
-#   DOTS     - path to the Oh My Zsh repository folder (default: $HOME/.dots)
+#   DOTS    - path to the dots repository folder (default: $HOME/.dots)
 #   REPO    - name of the Codeberg repo to install from (default: dantuck/dotfiles)
 #   REMOTE  - full remote URL of the git repo to install (default: Codeberg via HTTPS)
 #   BRANCH  - branch to check out immediately after install (default: main)
@@ -40,41 +40,39 @@ else
   }
 fi
 
+# Only use colors if connected to a terminal
+if is_tty; then
+  RAINBOW="
+    $(printf '\033[38;5;196m')
+    $(printf '\033[38;5;202m')
+    $(printf '\033[38;5;226m')
+    $(printf '\033[38;5;082m')
+    $(printf '\033[38;5;021m')
+    $(printf '\033[38;5;093m')
+    $(printf '\033[38;5;163m')
+  "
+  RED=$(printf '\033[31m')
+  GREEN=$(printf '\033[32m')
+  YELLOW=$(printf '\033[33m')
+  BLUE=$(printf '\033[34m')
+  BOLD=$(printf '\033[1m')
+  RESET=$(printf '\033[m')
+else
+  RAINBOW=""
+  RED=""
+  GREEN=""
+  YELLOW=""
+  BLUE=""
+  BOLD=""
+  RESET=""
+fi
+
 fmt_error() {
   printf '%sError: %s%s\n' "$BOLD$RED" "$*" "$RESET" >&2
 }
 
 command_exists() {
   command -v "$@" >/dev/null 2>&1
-}
-
-setup_color() {
-  # Only use colors if connected to a terminal
-  if is_tty; then
-    RAINBOW="
-      $(printf '\033[38;5;196m')
-      $(printf '\033[38;5;202m')
-      $(printf '\033[38;5;226m')
-      $(printf '\033[38;5;082m')
-      $(printf '\033[38;5;021m')
-      $(printf '\033[38;5;093m')
-      $(printf '\033[38;5;163m')
-    "
-    RED=$(printf '\033[31m')
-    GREEN=$(printf '\033[32m')
-    YELLOW=$(printf '\033[33m')
-    BLUE=$(printf '\033[34m')
-    BOLD=$(printf '\033[1m')
-    RESET=$(printf '\033[m')
-  else
-    RAINBOW=""
-    RED=""
-    GREEN=""
-    YELLOW=""
-    BLUE=""
-    BOLD=""
-    RESET=""
-  fi
 }
 
 setup_dots() {
@@ -116,8 +114,6 @@ setup_dots() {
 }
 
 main() {
-  setup_color
-
   case $(uname | tr '[:upper:]' '[:lower:]') in
   linux*)
       PLATFORM="linux"

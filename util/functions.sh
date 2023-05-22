@@ -14,8 +14,63 @@ else
   }
 fi
 
-command_exists() {
+# Only use colors if connected to a terminal
+if is_tty; then
+  RAINBOW="
+    $(printf '\033[38;5;196m')
+    $(printf '\033[38;5;202m')
+    $(printf '\033[38;5;226m')
+    $(printf '\033[38;5;082m')
+    $(printf '\033[38;5;021m')
+    $(printf '\033[38;5;093m')
+    $(printf '\033[38;5;163m')
+  "
+  RED=$(printf '\033[31m')
+  GREEN=$(printf '\033[32m')
+  YELLOW=$(printf '\033[33m')
+  BLUE=$(printf '\033[34m')
+  BOLD=$(printf '\033[1m')
+  RESET=$(printf '\033[m')
+else
+  RAINBOW=""
+  RED=""
+  GREEN=""
+  YELLOW=""
+  BLUE=""
+  BOLD=""
+  RESET=""
+fi
+
+# if test -n "$ZSH_VERSION"; then
+#   PROFILE_SHELL=zsh
+# elif test -n "$BASH_VERSION"; then
+#   PROFILE_SHELL=bash
+# elif test -n "$KSH_VERSION"; then
+#   PROFILE_SHELL=ksh
+# elif test -n "$FCEDIT"; then
+#   PROFILE_SHELL=ksh
+# elif test -n "$PS3"; then
+#   PROFILE_SHELL=unknown
+# else
+#   PROFILE_SHELL=sh
+# fi
+
+command_exists?() {
   command -v "$@" >/dev/null 2>&1
+}
+
+confirm?() {
+  local question=$1
+  local default=${2:-Y}
+
+  read -r -p "$question [Y/n] " response
+  response=${response,,}    # convert input to lowercase
+
+  if [[ $response =~ ^(yes|y| ) || -z $response ]]; then
+      return 0    # Confirmed
+  else
+      return 1    # Cancelled
+  fi
 }
 
 # This function uses the logic from supports-hyperlinks[1][2], which is
@@ -75,6 +130,31 @@ supports_hyperlinks() {
   return 1
 }
 
+info_header() {
+  local string="$1"
+  local color="${2:-BLUE}"
+  local desired_length=60
+
+  local num_dashes=$((desired_length - ${#string}))
+  local dashes=$(printf '%*s' "$num_dashes" | tr ' ' '-')
+
+  case $color in
+    yellow|YELLOW*)
+      echo "${YELLOW}---- $string $dashes${RESET}" ;;  
+    *) 
+      echo "${BLUE}---- $string $dashes${RESET}" ;;
+  esac
+}
+
+# usage: write_line_to_file_if_not_exists "some_line" "/some/file"
+write_line_to_file_if_not_exists() {
+	local LINE="$1"
+	local FILE="$2"
+
+	echo "Appending ${LINE} to ${FILE} if not exists."
+	grep -qxF "$LINE" "$FILE" || echo "$LINE" | sudo tee -a "$FILE"
+}
+
 fmt_link() {
   # $1: text, $2: url, $3: fallback mode
   if supports_hyperlinks; then
@@ -99,35 +179,6 @@ fmt_code() {
 
 fmt_error() {
   printf '%sError: %s%s\n' "$BOLD$RED" "$*" "$RESET" >&2
-}
-
-setup_color() {
-  # Only use colors if connected to a terminal
-  if is_tty; then
-    RAINBOW="
-      $(printf '\033[38;5;196m')
-      $(printf '\033[38;5;202m')
-      $(printf '\033[38;5;226m')
-      $(printf '\033[38;5;082m')
-      $(printf '\033[38;5;021m')
-      $(printf '\033[38;5;093m')
-      $(printf '\033[38;5;163m')
-    "
-    RED=$(printf '\033[31m')
-    GREEN=$(printf '\033[32m')
-    YELLOW=$(printf '\033[33m')
-    BLUE=$(printf '\033[34m')
-    BOLD=$(printf '\033[1m')
-    RESET=$(printf '\033[m')
-  else
-    RAINBOW=""
-    RED=""
-    GREEN=""
-    YELLOW=""
-    BLUE=""
-    BOLD=""
-    RESET=""
-  fi
 }
 
 setup_xdg() {
