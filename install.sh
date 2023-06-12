@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 #
 # This script should be run via curl:
 #   curl -fsSL https://codeberg.org/tuck/dotfiles/raw/branch/main/install.sh | sh"
@@ -28,19 +28,9 @@ REMOTE=${REMOTE:-https://codeberg.org/${REPO}.git}
 BRANCH=${BRANCH:-main}
 INSTALL_FOR_SHELL=${1:-fish}
 
-# The [ -t 1 ] check only works when the function is not called from
-# a subshell (like in `$(...)` or `(...)`, so this hack redefines the
-# function at the top level to always return false when stdout is not
-# a tty.
-if [ -t 1 ]; then
-  is_tty() {
-    true
-  }
-else
-  is_tty() {
-    false
-  }
-fi
+is_tty() {
+  test -t 1
+}
 
 # Only use colors if connected to a terminal
 if is_tty; then
@@ -60,18 +50,18 @@ else
 fi
 
 info_header() {
-  local string="$1"
-  local color="${2:-BLUE}"
-  local desired_length=60
+  string="$1"
+  color="${2:-BLUE}"
+  desired_length=60
 
-  local num_dashes=$((desired_length - ${#string}))
-  local dashes=$(printf '%*s' "$num_dashes" | tr ' ' '-')
+  num_dashes=$((desired_length - ${#string}))
+  dashes=$(printf '%*s' "$num_dashes" | tr ' ' '-')
 
   echo
   case $color in
     yellow|YELLOW*)
-      echo "${YELLOW}---- $string $dashes${RESET}" ;;  
-    *) 
+      echo "${YELLOW}---- $string $dashes${RESET}" ;;
+    *)
       echo "${BLUE}---- $string $dashes${RESET}" ;;
   esac
 }
@@ -80,23 +70,19 @@ fmt_error() {
   printf '%sError: %s%s\n' "$BOLD$RED" "$*" "$RESET" >&2
 }
 
-# shellcheck disable=SC2016 # backtick in single-quote
-fmt_code() {
-  is_tty && printf '`\033[2m%s\033[22m`\n' "$*" || printf '`%s`\n' "$*"
-}
-
 command_exists() {
   command -v "$@" >/dev/null 2>&1
 }
 
 confirm() {
-  local question=$1
-  local default=${2:-Y}
+  question=$1
+  default=${2:-Y}
 
-  read -r -p "$question [Y/n] " response
-  response=${response,,}    # convert input to lowercase
+  printf "$question [Y/n] "
+  read -r response
+  response=$(printf '%s' "$response" | tr '[:upper:]' '[:lower:]')
 
-  if [[ $response =~ ^(yes|y| ) || -z $response ]]; then
+  if [ "$response" = "yes" ] || [ "$response" = "y" ] || [ -z "$response" ]; then
     return 0    # Confirmed
   else
     return 1    # Cancelled
@@ -104,11 +90,6 @@ confirm() {
 }
 
 setup_dots() {
-  # Prevent the cloned repository from having insecure permissions. Failing to do
-  # so causes compinit() calls to fail with "command not found: compdef" errors
-  # for users with insecure umasks (e.g., "002", allowing group writability). Note
-  # that this will be ignored under Cygwin by default, as Windows ACLs take
-  # precedence over umasks except for filesystems mounted with option "noacl".
   umask g-w,o-w
 
   info_header "Installing DOTS"
@@ -117,15 +98,13 @@ setup_dots() {
 keeping them updated and synced with any given git remotes.
 EOF
 
-  # echo "${BLUE}Cloning dots...${RESET}"
-
-  _install_git?
-  _clone
+  install_git
+  clone
   
   echo
 }
 
-_clone() {
+clone() {
   echo
   git clone -c core.eol=lf -c core.autocrlf=false \
     -c fsck.zeroPaddedFilemode=ignore \
@@ -139,12 +118,8 @@ _clone() {
   }
 }
 
-_reload() {
-  exec "$SHELL" -l
-}
-
-_install_git?() {
-  if ! command_exists? git; then
+install_git() {
+  if ! command_exists git; then
     info_header "Install git?"
     cat << EOF
 ${YELLOW}Git is not installed.${RESET}
@@ -159,7 +134,7 @@ case your dotfiles manage the git installation.
 
 EOF
 
-    if _install_nix?; then
+    if install_nix; then
       nix-env -iA nixpkgs.git
     else
       echo
@@ -169,16 +144,16 @@ EOF
   fi
 
   ostype=$(uname)
-  if [ -z "${ostype%CYGWIN*}" ] && git --version | grep -q msysgit; then
+  if [ -z "${ostype#CYGWIN*}" ] && git --version | grep -q msysgit; then
     fmt_error "Windows/MSYS Git is not supported on Cygwin"
     fmt_error "Make sure the Cygwin git package is installed and is first on the \$PATH"
     exit 1
   fi
 }
 
-_install_nix?() {
+install_nix() {
   if confirm "Would you like to use Nixpkg?"; then
-    if ! command_exists? nix; then
+    if ! command_exists nix; then
       info_header "Installing Nix"
       cat << EOF
 ${YELLOW}Nix is not installed.${RESET}
@@ -187,7 +162,7 @@ Nix will be used to manage installing certain packages.
 We will use Nix to temporarily install git to clone the repo.
 
 Running the following command:
-  
+
   $ bash -c "sh <(curl -L https://nixos.org/nix/install) --daemon"
 
 EOF
@@ -207,11 +182,6 @@ main() {
   darwin*)
       PLATFORM="macos"
       ;;
-  msys*)
-      PLATFORM="windows"
-      fmt_error "Windows is not yet supported"
-      exit 1
-      ;;
   *)
       fmt_error "Unknown platform $(uname | tr '[:upper:]' '[:lower:]') not supported"
       exit 1
@@ -224,7 +194,7 @@ main() {
     echo "Skipping clone"
     echo
   else
-    setup_dots
+    _setup_dots
   fi
 
   cd "$DOTS"
