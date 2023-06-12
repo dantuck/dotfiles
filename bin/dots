@@ -3,6 +3,7 @@
 set -e
 
 DOTS=${DOTS:-~/.dots}
+DOTS_NAME=${DOTS_NAME:-dots}
 
 . "$DOTS/util/functions.sh"
 
@@ -68,7 +69,7 @@ _reload() {
 # Show usage
 _usage() {
   cat << EOF
-Usage: dots {action}
+Usage: ${DOTS_NAME} {action}
 actions:
      edit - open '$DOTS' directory in default $EDITOR
      reload - reload shell

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #
 # This script should be run via curl:
 #   curl -fsSL https://codeberg.org/tuck/dotfiles/raw/branch/main/install.sh | sh"
@@ -12,15 +12,17 @@
 #   DOTS=~/.dotfiles sh install.sh
 #
 # Respects the following environment variables:
-#   DOTS    - path to the dots repository folder (default: $HOME/.dots)
-#   REPO    - name of the Codeberg repo to install from (default: dantuck/dotfiles)
-#   REMOTE  - full remote URL of the git repo to install (default: Codeberg via HTTPS)
-#   BRANCH  - branch to check out immediately after install (default: main)
+#   DOTS        - path to the dots repository folder (default: $HOME/.dots)
+#   DOTS_NAME   - name of the dots command (default: dots)
+#   REPO        - name of the Codeberg repo to install from (default: dantuck/dotfiles)
+#   REMOTE      - full remote URL of the git repo to install (default: Codeberg via HTTPS)
+#   BRANCH      - branch to check out immediately after install (default: main)
 #
 set -e
 
 # Default settings
 DOTS=${DOTS:-$HOME/.dots}
+DOTS_NAME=${DOTS_NAME:-dots}
 REPO=${REPO:-tuck/dotfiles}
 REMOTE=${REMOTE:-https://codeberg.org/${REPO}.git}
 BRANCH=${BRANCH:-main}
@@ -42,15 +44,6 @@ fi
 
 # Only use colors if connected to a terminal
 if is_tty; then
-  RAINBOW="
-    $(printf '\033[38;5;196m')
-    $(printf '\033[38;5;202m')
-    $(printf '\033[38;5;226m')
-    $(printf '\033[38;5;082m')
-    $(printf '\033[38;5;021m')
-    $(printf '\033[38;5;093m')
-    $(printf '\033[38;5;163m')
-  "
   RED=$(printf '\033[31m')
   GREEN=$(printf '\033[32m')
   YELLOW=$(printf '\033[33m')
@@ -58,7 +51,6 @@ if is_tty; then
   BOLD=$(printf '\033[1m')
   RESET=$(printf '\033[m')
 else
-  RAINBOW=""
   RED=""
   GREEN=""
   YELLOW=""
@@ -67,12 +59,48 @@ else
   RESET=""
 fi
 
+info_header() {
+  local string="$1"
+  local color="${2:-BLUE}"
+  local desired_length=60
+
+  local num_dashes=$((desired_length - ${#string}))
+  local dashes=$(printf '%*s' "$num_dashes" | tr ' ' '-')
+
+  echo
+  case $color in
+    yellow|YELLOW*)
+      echo "${YELLOW}---- $string $dashes${RESET}" ;;  
+    *) 
+      echo "${BLUE}---- $string $dashes${RESET}" ;;
+  esac
+}
+
 fmt_error() {
   printf '%sError: %s%s\n' "$BOLD$RED" "$*" "$RESET" >&2
 }
 
+# shellcheck disable=SC2016 # backtick in single-quote
+fmt_code() {
+  is_tty && printf '`\033[2m%s\033[22m`\n' "$*" || printf '`%s`\n' "$*"
+}
+
 command_exists() {
   command -v "$@" >/dev/null 2>&1
+}
+
+confirm() {
+  local question=$1
+  local default=${2:-Y}
+
+  read -r -p "$question [Y/n] " response
+  response=${response,,}    # convert input to lowercase
+
+  if [[ $response =~ ^(yes|y| ) || -z $response ]]; then
+    return 0    # Confirmed
+  else
+    return 1    # Cancelled
+  fi
 }
 
 setup_dots() {
@@ -83,20 +111,22 @@ setup_dots() {
   # precedence over umasks except for filesystems mounted with option "noacl".
   umask g-w,o-w
 
-  echo "${BLUE}Cloning dots...${RESET}"
+  info_header "Installing DOTS"
+  cat << EOF
+'dots' is a utility command to help manage your dotfiles,
+keeping them updated and synced with any given git remotes.
+EOF
 
-  command_exists git || {
-    fmt_error "git is not installed"
-    exit 1
-  }
+  # echo "${BLUE}Cloning dots...${RESET}"
 
-  ostype=$(uname)
-  if [ -z "${ostype%CYGWIN*}" ] && git --version | grep -q msysgit; then
-    fmt_error "Windows/MSYS Git is not supported on Cygwin"
-    fmt_error "Make sure the Cygwin git package is installed and is first on the \$PATH"
-    exit 1
-  fi
+  _install_git?
+  _clone
+  
+  echo
+}
 
+_clone() {
+  echo
   git clone -c core.eol=lf -c core.autocrlf=false \
     -c fsck.zeroPaddedFilemode=ignore \
     -c fetch.fsck.zeroPaddedFilemode=ignore \
@@ -107,10 +137,66 @@ setup_dots() {
     fmt_error "git clone of dots repo failed"
     exit 1
   }
+}
 
-  cd ${DOTS}
+_reload() {
+  exec "$SHELL" -l
+}
 
-  echo
+_install_git?() {
+  if ! command_exists? git; then
+    info_header "Install git?"
+    cat << EOF
+${YELLOW}Git is not installed.${RESET}
+
+We need 'git' so that your git remote can be pulled and
+setup dotfiles with sprinkles of magic!
+
+You can install it with your own method or temporarily use
+nixpkgs. With this method, git will be installed via nix
+and then removed after completion. Git is removed just in
+case your dotfiles manage the git installation.
+
+EOF
+
+    if _install_nix?; then
+      nix-env -iA nixpkgs.git
+    else
+      echo
+      echo "${RED}Please install Git before continuing."
+      exit 1
+    fi
+  fi
+
+  ostype=$(uname)
+  if [ -z "${ostype%CYGWIN*}" ] && git --version | grep -q msysgit; then
+    fmt_error "Windows/MSYS Git is not supported on Cygwin"
+    fmt_error "Make sure the Cygwin git package is installed and is first on the \$PATH"
+    exit 1
+  fi
+}
+
+_install_nix?() {
+  if confirm "Would you like to use Nixpkg?"; then
+    if ! command_exists? nix; then
+      info_header "Installing Nix"
+      cat << EOF
+${YELLOW}Nix is not installed.${RESET}
+
+Nix will be used to manage installing certain packages.
+We will use Nix to temporarily install git to clone the repo.
+
+Running the following command:
+  
+  $ bash -c "sh <(curl -L https://nixos.org/nix/install) --daemon"
+
+EOF
+      exec bash -c "sh <(curl -L https://nixos.org/nix/install) --daemon"
+      return 0
+    fi
+  else
+    return 1
+  fi
 }
 
 main() {
@@ -133,38 +219,24 @@ main() {
   esac
 
   if [ -d "$DOTS" ]; then
-    echo "\n${YELLOW}The \$DOTS folder already exists ($DOTS).${RESET}"
-    if [ "$custom_zsh" = yes ]; then
-      cat <<EOF
-
-You ran the installer with the \$DOTS setting or the \$DOTS variable is
-exported. You have 3 options:
-
-1. Unset the DOTS variable when calling the installer:
-   $(fmt_code "DOTS= sh install.sh")
-2. Install Dots to a directory that doesn't exist yet:
-   $(fmt_code "DOTS=path/to/new/dots/folder sh install.sh")
-3. (Caution) If the folder doesn't contain important information,
-   you can just remove it with $(fmt_code "rm -r $DOTS")
-
-EOF
-    else
-      echo "Skipping clone.\n"
-    fi
+    echo
+    echo "${YELLOW}The \$DOTS folder already exists ($DOTS).${RESET}"
+    echo "Skipping clone"
+    echo
   else
     setup_dots
   fi
 
-  cd $DOTS
+  cd "$DOTS"
 
-  chmod +x dots
-  echo "${BLUE}Linking \"$PWD/dots\" /usr/local/bin/dots"
+  chmod +x bin/dots
+  echo "${BLUE}Linking \"$PWD/bin/dots\" /usr/local/bin/dots"
   echo "> [sudo] required to run:"
-  echo "> sudo ln -sf \"$PWD/dots\" /usr/local/bin/dots${RESET}"
-  sudo ln -sf "$PWD/dots" /usr/local/bin/dots
+  echo "> sudo ln -sf \"$PWD/bin/dots\" /usr/local/bin/dots${RESET}"
+  sudo ln -sf "$PWD/bin/dots" "/usr/local/bin/${DOTS_NAME}"
 
   echo
-  exec ./dots install ${INSTALL_FOR_SHELL}
+  exec "${DOTS_NAME}" install ${INSTALL_FOR_SHELL}
 }
 
 main "$@"
