@@ -6,7 +6,7 @@ set -U fish_greeting
 
 set -Ux DOTFILES ~/.dots
 
-set -Ua fish_user_paths $DOTFILES/fish/bin $HOME/.bin
+set -Ua fish_user_paths $DOTFILES/fish/bin $HOME/.bin $HOME/.local/bin
 
 for f in $DOTFILES/fish/**/functions
 	set -Up fish_function_path $f
