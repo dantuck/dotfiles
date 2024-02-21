@@ -187,3 +187,7 @@ setup_xdg() {
   export XDG_DATA_HOME=${HOME}/.local/share
   export XDG_RUNTIME_DIR=${HOME}/tmp/xdg_runtime
 }
+
+reload() {
+  exec "$SHELL" -l
+}

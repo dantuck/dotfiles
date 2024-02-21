@@ -1,0 +1,18 @@
+# https://taskfile.dev
+
+version: '3'
+
+tasks:
+  apply:
+    cmds:
+      - task: tuckx
+  tuckx:
+    status:
+      - "test $(uname -s) != Linux"
+    cmds:
+      - nix build './#linuxConfigurations.{{ .HOSTNAME }}.system'
+      # - ./result/sw/bin/darwin-rebuild switch --flake .
+  hello:
+    cmds:
+      - echo 'Hello World from Task!'
+    silent: true

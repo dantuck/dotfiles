@@ -55,7 +55,7 @@ The following command would be ran:
 EOF
     if confirm? "Can I install it for you?"; then
       exec bash -c "sh <(curl -L https://nixos.org/nix/install) --daemon"
-      _reload
+      reload
     else
       echo
       info_header "Install Nix?" "YELLOW"
@@ -73,11 +73,14 @@ ${YELLOW}home-manager is not installed.${RESET}
 The following command would be ran:
   
   nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager && nix-channel --update
+  nix-shell '<home-manager>' -A install
 
 EOF
     if confirm? "Can I install it for you?"; then
-      nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager && nix-channel --update
-      _reload
+      nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
+      nix-channel --update
+      
+      # reload
     else
       info_header "Install Home Manager?" "YELLOW"
       echo "${RED}Please install home-manager before continuing."
@@ -97,6 +100,8 @@ The following command would be ran:
 EOF
 
   ln -sf "$PWD/nix/home.nix" ~/.config/home-manager/home.nix
+
+  nix-shell '<home-manager>' -A install
 }
 
 main() {
@@ -104,7 +109,7 @@ main() {
   _install_home_manager?
   _link_nix_home
 
-  home-manager switch
+  # home-manager switch
 
   _set_default_shell
 }
