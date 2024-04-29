@@ -1,5 +1,6 @@
 keybinds clear-defaults=true {
     normal {
+        // bind "Ctrl r" { Clear; }
         bind "Ctrl g" { SwitchToMode "locked"; }
         bind "Ctrl p" { SwitchToMode "pane"; }
         bind "Ctrl n" { SwitchToMode "resize"; }

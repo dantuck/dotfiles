@@ -100,7 +100,7 @@ EOF
 
   install_git
   clone
-  
+
   echo
 }
 
@@ -194,7 +194,7 @@ main() {
     echo "Skipping clone"
     echo
   else
-    _setup_dots
+    setup_dots
   fi
 
   cd "$DOTS"
