@@ -1,0 +1,3 @@
+import = ["~/.config/alacritty/alacritty.defaults.toml", "~/.extra/alacritty.shell.toml"]
+
+# put your overrides below this line
